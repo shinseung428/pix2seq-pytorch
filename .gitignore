@@ -1,0 +1,7 @@
+__pycache__/
+checkpoints/
+logs/
+
+*.pyc
+.DS_Store
+lightning_module/.DS_Store

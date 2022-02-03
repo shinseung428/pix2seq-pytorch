@@ -1,0 +1,80 @@
+
+exp_name: "pix2seq_train"
+local_root: "."
+
+# Training
+train:
+    resume: ""
+    weight_only: False
+
+    max_epochs: 500
+    warmup_epochs: 5
+
+    use_fp16: False
+    batch_size: 4
+    scalar_log_interval_step: 10
+    image_log_interval_step: 1000
+
+    optimizer: "adamw"
+    learning_rate: 0.0005
+    weight_decay: 0.05
+
+    scheduler: "linear"
+    scheduler_step_size: 50
+    scheduler_scale_size: 0.98
+
+    class_mask_prob: 0.5
+
+    image_size: 1280
+    bin_size: 1280
+
+    class_num: 90 # classes in coco dataset
+
+    max_targets: 100
+
+    log_dir: "logs"
+    save_dir: "checkpoints"
+    save_every_n_epoch: 1
+
+test:
+    weight_path: ""
+    save_image_results: True
+
+# Dataset
+data:
+    root_dir: /datasets/coco/
+
+    # Augmentation
+    crop_ratio: 0.8
+    crop_prob: 0.3
+
+    horizontal_flip_prob: 0.5
+
+    object_min_area: 0.0
+    object_min_visibility: 0.1
+
+    num_workers: 8
+    prefetch_factor: 2
+
+
+# Model
+model:
+    normalize_before: True
+    activation: "gelu"
+
+    max_h: 40
+    max_w: 40
+
+    enc_hidden_dim: 256
+    enc_ff_dim: 1024
+    enc_layers: 6
+    enc_heads: 8
+    enc_dropout: 0.1
+
+    dec_hidden_dim: 256
+    dec_ff_dim: 1024
+    dec_layers: 6
+    dec_heads: 8
+    dec_dropout: 0.1
+
+    dec_max_len: 500
